@@ -1,0 +1,61 @@
+.modal-content{
+    background:#E1E1E1;
+    border: 1px solid #dedede;
+    box-shadow: 4px 4px 0 #fff, 6px 6px 0 #e7e7e7,4px 4px 0 #fff,6px 6px 0 #e7e7e7;
+    padding: 30px 15px 25px;   
+}
+.btn-submit{
+    color: #fff;
+    background-color: #0097e6;
+    font-size: 20px;
+    width: 100px;
+    padding: 5px 20px;
+    border-radius: 10px;
+    border: none;
+    display: inline-block;
+    transition: all 0.3s;
+}
+.btn-submit:hover{
+    background-color: #A82682;
+    box-shadow: 2px 2px 5px #333;
+}
+
+.form-control{
+    color: #0097e6;
+    background-color: rgba(255,255,255,0.9);
+    font-size: 16px;
+    letter-spacing: 1px;
+    height: 40px;
+    padding: 2px 15px 2px 15px;
+    box-shadow: 0 0 5px -3px #333;
+    border: none;
+    border-radius: 10px;
+    transition: all 0.3s;      
+}
+.form-group{
+    padding: 10px;
+    /* margin-top: 20px; */
+}
+
+/* table  */
+
+.table-panel {
+    border-radius: 0;
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    margin-top: 30px;
+}
+.table-panel .table-panel-heading {
+    background: linear-gradient(#f5f5f5, #d9d9d9);
+    padding: 15px;
+    border-radius: 0;
+    border: none;
+}
+.table-panel .table-panel-heading .title {
+    color: #555;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: capitalize;
+    line-height: 35px;
+    margin: 0;
+}
