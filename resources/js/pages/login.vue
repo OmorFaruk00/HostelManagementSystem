@@ -65,7 +65,7 @@ export default {
             password: "123456",
         });
         const login = async () => {
-            await axios.post("api/login", form).then((res) => {
+            await axios.post("/login", form).then((res) => {
                   console.log(res.data.user.name)
                 if (res.status == 201) {
                     localStorage.setItem("token", res.data.token);

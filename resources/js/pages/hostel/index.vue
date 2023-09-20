@@ -2,66 +2,58 @@
     <div class="container">
         <div class="table-panel table table-bordered">
             <div>
-            <div class="table-panel">
-                <div class="d-flex justify-content-between table-panel-heading">
-                    <div>
-                        <h4 class="title">Data List</h4>
-                    </div>
-                    <div>
-                        <div class="">
-                            <button
-                                type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#customModal"
-                                class="btn btn-submit"
-                            >
-                                create
-                            </button>
+                <div class="table-panel">
+                    <div class="d-flex justify-content-between table-panel-heading">
+                        <div>
+                            <h4 class="title">Hostel List</h4>
+                        </div>
+                        <div>
+                            <div class="">
+                                <button type="button" class="btn-submit" @click="CreateModal()">
+                                    create
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Sl</th>
+                                <th>Hostel Name</th>
+                                <th>Type</th>
+                                <th>Location</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(hostel, index) in hostels.data" :key="index">
+                                <td>{{ hostels.current_page *  hostels.per_page - hostels.per_page+ index + 1 }}</td>
+                                <td>{{ hostel.name }}</td>
+                                <td>{{ hostel.type }}</td>
+                                <td>{{ hostel.address }}</td>
+                                <td>
+                                    <button class="btn" @click="DataEdit(hostel.id)">
+                                        <img src="/images/edit.png" />
+                                    </button>
+                                    <button class="btn" @click="DataDelete(hostel.id)">
+                                        <img src="/images/delete.png" />
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <Pagination :data="hostels" @pagination-change-page="DataGet" />
+                    </div>
+                </div>
             </div>
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>First</th>
-                            <th>Last</th>
-                            <th>Handle</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>
-                                <button class="btn" @click="DataEdit()">
-                                    <img src="/images/edit.png" />
-                                </button>
-                                <button class="btn">
-                                    <img src="/images/delete.png" />
-                                  
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
         </div>
 
         <!-- Modal -->
-        <div
-            class="modal fade"
-            id="customModal"
-            tabindex="-1"
-            aria-labelledby="customModalLabel"
-            aria-hidden="true"
-        >
+        <div class="modal fade" id="customModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -71,163 +63,193 @@
                         <h5 v-if="update" class="modal-title" id="customModalLabel">
                             Update
                         </h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
+                        <button @click="RemoveBtn()" type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <label for=""> Name</label>
-                            <input
-                                class="form-control"
-                                type="text"
-                                placeholder=""
-                                v-model="name"
-                            />
+                            <input class="form-control" type="text" placeholder="" v-model="hostel.name" />
+                            <p v-if="errors.name" v-text="errors.name[0]" class="text-danger"></p>
                         </div>
                         <div class="form-group">
-                            <label for=""> Email</label>
-                            <input
-                                class="form-control"
-                                type="text"
-                                placeholder=""
-                                v-model="name"
-                            />
+                            <label for=""> Type</label>
+                            <select class="form-control" v-model="hostel.type">
+                                <option value="Boys" selected>Boys</option>
+                                <option value="Girls">Girls</option>
+                            </select>
+                            <p v-if="errors.type" v-text="errors.type[0]" class="text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for=""> Address</label>
+                            <input class="form-control" type="text" placeholder="" v-model="hostel.address" />
+                            <p v-if="errors.address" v-text="errors.address[0]" class="text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for=""> Short Description</label>
+                            <textarea class="form-control" rows="3" v-model="hostel.description"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button v-if="add" type="button" class="btn btn-submit">
+                        <button v-if="add" type="button" class="btn btn-submit" @click="DataStore()">
                             Submit
                         </button>
-                        <button v-if="update" type="button" class="btn btn-submit">
+                        <button v-if="update" type="button" class="btn btn-submit" @click="DataUpdate()">
                             Update
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
     </div>
 </template>
 
+
 <script>
+import axios from "@/axios";
+import { useToast } from "vue-toast-notification";
+import { Bootstrap5Pagination } from 'laravel-vue-pagination';
 export default {
-   data(){
-    return {
+    components: {
+        'Pagination': Bootstrap5Pagination,
+    },
+    data() {
+        return {
             add: true,
-            update: false,           
-            errors: {},
-           
+            update: false,
+            errors: "",
+            hostels: "",
+            id: "",
+            toast: useToast(),
+            hostel: {
+                name: "",
+                address: "",
+                type: "Boys",
+                description: "",
+            },
         };
     },
-    methods: {
-        DataEdit(){
-            this.update = true;
-            this.add = false;
-            $("#customModal").modal("show");
-        }
-    }
+    created() {
+        this.DataGet();
+    },
 
+    methods: {
+        CreateModal() {
+            $("#customModal").modal("show");
+        },
+        DataGet(page = 1) {
+            axios
+                .get("/hostel?page=" + page)
+                .then((response) => {
+                    this.hostels = response.data;
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                });
+        },
+        DataStore() {
+            const Data = this.hostel;
+            axios
+                .post("/hostel", Data)
+                .then((res) => {
+                    $("#customModal").modal("hide");
+                    this.toast.success(res.data.message, {
+                        position: "top-right",
+                    });
+                    this.hostel = {};
+                    this.errors = "";
+                    this.DataGet();
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                    this.toast.warning("Something Went Wrong!", {
+                        position: "top-right",
+                    });
+                });
+        },
+        DataEdit(id) {
+            axios
+                .get("/hostel/" + id + "/edit")
+                .then((res) => {
+                    this.id = res.data.id;
+                    this.hostel.name = res.data.name;
+                    this.hostel.type = res.data.type;
+                    this.hostel.address = res.data.address;
+                    this.hostel.description = res.data.description;
+                    $("#customModal").modal("show");
+                    this.update = true;
+                    this.add = false;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
+        DataUpdate() {
+            const Data = this.hostel;
+            axios
+                .put("/hostel/" + this.id, Data)
+                .then((res) => {
+                    $("#customModal").modal("hide");
+                    this.toast.success(res.data.message, {
+                        position: "top-right",
+                    });
+                    this.errors = "";
+                    this.update = false;
+                    this.add = true;
+                    this.hostel = {};
+                    this.hostel.type = "Boys";
+                    this.DataGet();
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                    this.toast.warning("Something Went Wrong!", {
+                        position: "top-right",
+                    });
+                });
+        },
+
+
+        DataDelete(id) {
+            this.$swal({
+                title: 'Confirm Delete',
+                text: 'Are you sure you want to delete this item?',
+                type: "warning",
+                icon: 'warning',
+                position: "top",
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: "Yes, Delete it!"
+            }).then((result) => {
+                if (result.value) {
+                    axios.delete("/hostel/" + id)
+                        .then((res) => {
+                            this.toast.success(res.data.message, {
+                                position: "top-right",
+                            });
+                            this.DataGet();
+
+                        })
+                        .catch((error) => {
+                            this.toast.warning("Something Went Wrong!", {
+                                position: "top-right",
+                            });
+                        });
+
+                }
+            });
+        },
+
+        RemoveBtn() {
+            this.add = true;
+            this.update = false;
+            this.hostel = {};
+            this.hostel.type = "Boys"
+        },
+    },
 };
 </script>
-<!-- 
-<style scoped>
-.demo {
-    font-family: "Noto Sans", sans-serif;
-}
-.w-12 {
-    width: 125px;
-}
-.w-4 {
-    width: 40px;
-}
-
-.table-panel {
-    border-radius: 0;
-    border: none;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-    margin-top: 30px;
-}
-.table-panel .table-panel-heading {
-    background: linear-gradient(#f5f5f5, #d9d9d9);
-    padding: 15px;
-    border-radius: 0;
-    border: none;
-}
-.table-panel .table-panel-heading .title {
-    color: #555;
-    font-size: 22px;
-    font-weight: 700;
-    text-transform: capitalize;
-    line-height: 35px;
-    margin: 0;
-}
-
-.table-panel .table-body {
-    padding: 0;
-}
-.table-panel .table-body .table {
-    background: linear-gradient(
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    border: 1px solid #dedede;
-}
-.table-panel .table-body .table thead tr th {
-    color: #555;
-    font-size: 16px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 15px;
-    border: none;
-    border: 1px solid #dedede;
-}
-.table-panel .table-body .table tbody tr td {
-    color: #777;
-    font-size: 15px;
-    padding: 15px;
-    vertical-align: middle;
-    border: 1px solid #dedede;
-}
-.table-panel .table-body .table tbody .action-list {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-.table-panel .table-body .table tbody .action-list li {
-    margin: 0 5px;
-    display: inline-block;
-}
-.table-panel .table-body .table tbody .action-list li a {
-    font-size: 15px;
-    line-height: 33px;
-    height: 35px;
-    width: 35px;
-    padding: 0;
-    transition: all 0.3s ease 0s;
-}
-
-.pagination {
-    margin: 0;
-}
-
-@media only screen and (max-width: 767px) {
-    .table-panel .table-panel-heading .title {
-        text-align: center;
-        margin: 0 0 10px;
-    }
-    .table-panel .table-panel-heading .btn-group {
-        font-size: 0;
-        text-align: center;
-        margin: 0 auto;
-        display: block;
-    }
-    .table-panel .table-panel-heading .btn-group .btn {
-        float: none;
-    }
-}
-</style> -->

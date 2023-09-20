@@ -1,8 +1,17 @@
+
+
 .modal-content{
     background:#E1E1E1;
     border: 1px solid #dedede;
     box-shadow: 4px 4px 0 #fff, 6px 6px 0 #e7e7e7,4px 4px 0 #fff,6px 6px 0 #e7e7e7;
     padding: 30px 15px 25px;   
+}
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    padding: 20pz;
+    padding-left: 10px;
+    font-size: 30px;
 }
 .btn-submit{
     color: #fff;
@@ -10,6 +19,7 @@
     font-size: 20px;
     width: 100px;
     padding: 5px 20px;
+    margin-right: 12px;
     border-radius: 10px;
     border: none;
     display: inline-block;
@@ -20,13 +30,13 @@
     box-shadow: 2px 2px 5px #333;
 }
 
+
 .form-control{
-    color: #0097e6;
+    color: #000;
     background-color: rgba(255,255,255,0.9);
     font-size: 16px;
-    letter-spacing: 1px;
-    height: 40px;
-    padding: 2px 15px 2px 15px;
+    letter-spacing: 1px;    
+    /* padding: 2px 15px 2px 15px; */
     box-shadow: 0 0 5px -3px #333;
     border: none;
     border-radius: 10px;
@@ -58,4 +68,14 @@
     text-transform: capitalize;
     line-height: 35px;
     margin: 0;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #0097e6;
+    border-color: #0097e6;
+}
+.page-link {
+   color: #000;
 }

@@ -40,13 +40,13 @@
       <div class="d-flex " id="wrapper">
         <div id="sidebar-wrapper" class="">
           <div class="list-group sidebar">
-            <router-link class="sidebar-menu" to="/dashboard"><img src="/images/dash.png" alt="">
+            <router-link class="sidebar-menu" to="/dashboard"><img src="/images/dashboard.png" alt="">
               Dashboard</router-link>
-              <router-link class="sidebar-menu" to="/home"><img src="/images/dash.png" alt="">
-              home</router-link>             
+              <!-- <router-link class="sidebar-menu" to="/home"><img src="/images/dash.png" alt="">
+              home</router-link>              -->
   
-            <div class="sidebar-menu" @click.prevent="setting = !setting">
-              <span><img src="/images/acc.png" alt="" />
+            <div class="sidebar-menu" @click.prevent="account = !account">
+              <span><img src="/images/setting.png" alt="" />
                Setting
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor"
                   class="bi bi-chevron-down float-right mt-2 mr-4 font-weight-bolder" viewBox="0 0 16 16">
@@ -55,8 +55,8 @@
                 </svg>
               </span>
             </div>
-            <div v-if="setting" class="dropdown_item">
-              <router-link class="sidebar-item" to="/hostel">Hostel
+            <div v-if="account" class="dropdown_item">
+              <router-link class="sidebar-item" to="/hostel"><img src="/images/hostel.png" alt="" />Hostel
               </router-link>
              
              
@@ -66,7 +66,7 @@
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
         <div id="page-content-wrapper">
-          <div class="container-fluid">
+          <div class="container">
             <router-view />
           </div>
         </div>
@@ -81,20 +81,22 @@
   export default {
       data() {
           return {       
-              setting:false,
+              account:false,
               user:localStorage.getItem('user'),
               router:useRouter(),
         
       }
     },
     mounted() {
-    //toggle sidebar
-    $("#menu-toggle").click(function (e) {
+      $("#menu-toggle").click(function (e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
+     
     });
+ 
   },
   methods: {
+
     userprofile() {
       document.getElementById("user").classList.toggle("show");
     },   
@@ -195,6 +197,7 @@
   
   #wrapper {
     display: flex;
+    height: 100%;
   }
   
   .sidebar {
@@ -216,11 +219,11 @@
   }
   
   .sidebar-item {
-    font-size: 16px !important;
+    font-size: 15px;
     color: #000;
     margin: 5px 0px;
     text-decoration: none;
-    padding-left: 70px  !important;
+    padding-left: 40px !important;
   }
   
   .sidebar-item:hover {
@@ -253,10 +256,7 @@
     -o-transition: margin 0.25s ease-out;
     transition: margin 0.25s ease-out;
     padding-top: 50px;
-    background: #1A86CD;
-    /* position: fixed; */
-  
-  
+    background: #1A86CD;  
   
   }
   
@@ -285,8 +285,11 @@
   }
   
   #page-content-wrapper {
-    min-width: 100vw;
-    height: 100vh;
+    flex: 1; /* Allow the content container to fill the remaining width */
+    /* margin-left: 250px; */
+    display: block;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center;
   
   }
   
@@ -311,7 +314,6 @@
     #page-content-wrapper {
       min-width: 0;
       width: 100%;
-      /* background: #e7e7e7; */
     }
   
     #wrapper.toggled #sidebar-wrapper {
