@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HostelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\HostelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,5 @@ Route::controller(AuthController::class)->group(function(){
 Route::group(["middleware" => 'auth:sanctum'], function () {
   
     Route::resource('hostel', HostelController::class);
+    Route::resource('room', RoomController::class);
 });

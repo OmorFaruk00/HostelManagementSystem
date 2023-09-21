@@ -6,7 +6,7 @@ import register from './pages/register.vue';
 import dashboard from './pages/dashboard.vue';
 import adminLayout from './layouts/adminLayout.vue';
 import hostel from './pages/hostel/index.vue';
-import test from './pages/test.vue';
+import room from './pages/room/index.vue';
 
 
 
@@ -35,6 +35,11 @@ const routes=[
                 name:'Hostel',
                 component:hostel
             },
+            {
+                path:"/room",
+                name:'Room',
+                component:room
+            },
 
         ]
     },
@@ -49,11 +54,7 @@ const routes=[
         component:login,
         meta:{requiresAuth:false}
     },
-    // {
-    //     path:"/test",
-    //     name:'Test',
-    //     component:test,
-    // },
+  
     // {
     //     path:"/dashboard",
     //     name:'Dashboard',

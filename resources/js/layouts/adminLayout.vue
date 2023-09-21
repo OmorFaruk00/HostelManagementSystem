@@ -58,6 +58,8 @@
             <div v-if="account" class="dropdown_item">
               <router-link class="sidebar-item" to="/hostel"><img src="/images/hostel.png" alt="" />Hostel
               </router-link>
+              <router-link class="sidebar-item" to="/room"><img src="/images/room.png" alt="" />Room
+              </router-link>
              
              
             </div>
