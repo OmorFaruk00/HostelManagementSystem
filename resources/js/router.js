@@ -40,6 +40,7 @@ const routes=[
                 name:'Room',
                 component:room
             },
+           
 
         ]
     },
@@ -55,15 +56,7 @@ const routes=[
         meta:{requiresAuth:false}
     },
   
-    // {
-    //     path:"/dashboard",
-    //     name:'Dashboard',
-    //     component:dashboard,
-    //     meta:{
-    //         requiresAuth:true,
-    //         layout:'default'
-    //     }
-    // },
+   
 
 
 

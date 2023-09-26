@@ -21,7 +21,7 @@ class RoomRepository
             $data =  $request->validated();  
             $data['created_by'] = auth()->user()->id;
             Room::insert($data);
-            return response()->json(['message'=>"Room Created Cuccessfully","status"=>201]);
+            return response()->json(['message'=>"Room Created Successfully","status"=>201]);
                        
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -42,7 +42,7 @@ class RoomRepository
             $data = $request->validated();
             $data['updated_by'] = auth()->user()->id;
             Room::find($id)->update($data);
-            return response()->json(['message'=>"Room Updated Cuccessfully","status"=>200]);
+            return response()->json(['message'=>"Room Updated Successfully","status"=>200]);
                         
            } catch (\Exception $e) {
                return $e->getMessage();
@@ -52,7 +52,7 @@ class RoomRepository
     public function deleteRoom($id){
         try {
             Room::find($id)->delete();
-            return response()->json(['message'=>"Room Deleted Cuccessfully"]);
+            return response()->json(['message'=>"Room Deleted Successfully"]);
                         
            } catch (\Exception $e) {
                return $e->getMessage();

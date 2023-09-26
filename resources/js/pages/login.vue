@@ -13,7 +13,7 @@
                             <h3 class="title">User Login</h3>
                             <form
                                 class="form-horizontal"
-                                @submit.prevent="login"
+                                
                             >
                                 <div class="form-group mt-4">
                                     <span class="input-icon"
@@ -22,8 +22,8 @@
                                     <input
                                         class="form-control"
                                         type="email"
-                                        placeholder="Username"
-                                        v-model="form.email"
+                                        placeholder="Username" v-model="auth.form.email"
+                                       
                                     />
                                 </div>
                                 <div class="form-group">
@@ -33,11 +33,11 @@
                                     <input
                                         class="form-control"
                                         type="password"
-                                        placeholder="Password"
-                                        v-model="form.password"
+                                        placeholder="Password"  v-model="auth.form.password"
+                                       
                                     />
                                 </div>
-                                <button type="submit" class="btn signin">
+                                <button type="submit" class="btn signin" @click="auth.login">
                                     Login
                                 </button>
                                 <span
@@ -54,36 +54,10 @@
     </div>
 </template>
 
-<script>
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-export default {
-    setup() {
-        const router = useRouter();
-        let form = reactive({
-            email: "omor@gmail.com",
-            password: "123456",
-        });
-        const login = async () => {
-            await axios.post("/login", form).then((res) => {
-                  console.log(res.data.user.name)
-                if (res.status == 201) {
-                    localStorage.setItem("token", res.data.token);
-                    localStorage.setItem("user", res.data.user.name);
-                    router.push({ name: "Dashboard" });
+<script setup>
+import {authStore} from '@/stores/auth.js'
+const auth  = authStore();
 
-                    console.log(res.data.token);
-                } else {
-                    alert("error");
-                }
-            });
-        };
-        return {
-            form,
-            login,
-        };
-    },
-};
 </script>
 <style scoped>
 .bg {

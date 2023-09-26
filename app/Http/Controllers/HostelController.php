@@ -19,7 +19,13 @@ class HostelController extends Controller
        return $this->hostelRepository->getHostels();   
         
     } 
-  
+
+    public function show($id)
+    {
+        return $this->hostelRepository->showHostel($id);  
+       
+        
+    }  
 
     public function store(HostelRequest $request)
     {
@@ -45,6 +51,11 @@ class HostelController extends Controller
     public function destroy(string $id)
     {
         return $this->hostelRepository->deleteHostel($id); 
+        
+    }
+    public function getAllHostel()
+    {
+        return $this->hostelRepository->getAllHostel(); 
         
     }
 }

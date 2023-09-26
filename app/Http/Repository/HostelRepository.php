@@ -22,11 +22,30 @@ class HostelRepository
             $data =  $request->validated();  
             $data['created_by'] = auth()->user()->id;
             Hostel::insert($data);
-            return response()->json(['message'=>"Hostel Created Cuccessfully","status"=>201]); 
+            return response()->json(['message'=>"Hostel Created Successfully","status"=>201]); 
 
         } catch (\Exception $e) {
             return $e->getMessage();
         } 
+    }
+
+    public function showHostel($id){
+        try {
+            if ($id == 0) {
+                $resource = Hostel::get();        
+                if (!$resource) {
+                    return response()->json(['message' => 'Hostel not found'], 404);
+                }        
+                return response()->json($resource, 200);
+            }        
+            
+            $resources = Hostel::find($id);        
+            return response()->json($resources, 200);                          
+                        
+           } catch (\Exception $e) {
+               return $e->getMessage();
+           } 
+      
     }
 
     public function editHostel($id){
@@ -43,7 +62,7 @@ class HostelRepository
             $data = $request->validated();
             $data['created_by'] = auth()->user()->id;
             Hostel::find($id)->update($data);           
-            return response()->json(['message'=>"Hostel Updated Cuccessfully","status"=>200]);
+            return response()->json(['message'=>"Hostel Updated Successfully","status"=>200]);
                         
            } catch (\Exception $e) {
                return $e->getMessage();
@@ -53,11 +72,13 @@ class HostelRepository
     public function deleteHostel($id){
         try {
             Hostel::find($id)->delete();
-            return response()->json(['message'=>"Hostel Deleted Cuccessfully"]);
+            return response()->json(['message'=>"Hostel Deleted Successfully"]);
                         
            } catch (\Exception $e) {
                return $e->getMessage();
-           } 
-      
+           }       
     }
+
+   
+
 }

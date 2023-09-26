@@ -19,6 +19,7 @@
         "@vitejs/plugin-vue": "^4.3.4",
         "@vuesimple/vs-pagination": "^1.4.13",
         "laravel-vue-pagination": "^4.1.1",
+        "pinia": "^2.1.6",
         "sweetalert2": "^11.7.28",
         "vue": "^3.2.36",
         "vue-loader": "^17.2.2",
