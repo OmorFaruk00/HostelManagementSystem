@@ -5,7 +5,7 @@
                 <div class="table-panel">
                     <div class="d-flex justify-content-between table-panel-heading">
                         <div>
-                            <h4 class="title">Room List</h4>
+                            <h4 class="title">seat List</h4>
                         </div>
                         <div>
                             <div class="">
@@ -22,25 +22,25 @@
                             <tr>
                                 <th>Sl</th>
                                 <th>Hostel</th>
+                                <th>Room Number</th>
                                 <th>Bed Type</th>
-                                <th>Room</th>
-                                <th>Capacity</th>
+                                <th>Available</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(room, index) in store.rooms.data" :key="index">
-                                <td>{{ store.rooms.current_page * store.rooms.per_page - store.rooms.per_page + index + 1 }}
+                            <tr v-for="(seat, index) in store.seats.data" :key="index">
+                                <td>{{ store.seats.current_page * store.seats.per_page - store.seats.per_page + index + 1 }}
                                 </td>
-                                <td>{{ room.hostel.name }}</td>
-                                <td>{{ room.bed_type }}</td>
-                                <td>{{ room.room }}</td>
-                                <td>{{ room.capacity }}</td>
+                                <td>{{ seat.hostel.name }}</td>
+                                <td>{{ seat.room.room }}</td>
+                                <td>{{ seat.bed_type }}</td>
+                                <td>{{ seat.available }}</td>
                                 <td>
-                                    <button class="btn" @click="store.DataEdit(room.id)">
+                                    <button class="btn" @click="store.DataEdit(seat.id)">
                                         <img src="/images/edit.png" />
                                     </button>
-                                    <button class="btn" @click="store.DataDelete(room.id)">
+                                    <button class="btn" @click="store.DataDelete(seat.id)">
                                         <img src="/images/delete.png" />
                                     </button>
                                 </td>
@@ -48,7 +48,7 @@
                         </tbody>
                     </table>                  
                     <div class="d-flex justify-content-end">
-                        <Bootstrap5Pagination :data="store.rooms" @pagination-change-page="store.DataGet" />
+                        <Bootstrap5Pagination :data="store.seats" @pagination-change-page="store.DataGet" />
                     </div>
                 </div>
             </div>
@@ -74,37 +74,30 @@
 
                         <div class="form-group">
                             <label for=""> Hostel</label>
-                            <select class="form-control" v-model="store.room.hostel_id">
+                            <select class="form-control" v-model="store.seat.hostel_id" @change="roomstore.getRooms(store.seat.hostel_id)">
                                 <option value="" disabled selected>Select Hostel</option>
                                 <option v-for="(hostel, index) in hostelstore.allhostels" :key="index" :value="hostel.id" selected>{{ hostel.name }}</option>
                                 
                             </select>
-                            <span v-if="store.errors.hostel_id" v-text="store.errors.hostel_id[0]" class="text-danger"></span>
+                            <p v-if="store.errors.hostel_id" v-text="store.errors.hostel_id[0]" class="text-danger"></p>
                         </div>
-                      
+
                         <div class="form-group">
-                            <label for=""> Bed Type</label>
-                            <select class="form-control" v-model="store.room.bed_type">
-                                <option value="" disabled selected>Select Bed Type</option>
-                                <option value="Room">Room</option>
-                                <option value="Relax">Relax</option>
-                                <option value="Deluxe">Deluxe</option>
-                                <option value="SuperDeluxe">Super Deluxe</option>
-                                <option value="Dorm">Dorm</option>                           
+                            <label for=""> Room</label>
+                            <select class="form-control" v-model="store.seat.room_id" >
+                                <option value="" disabled selected>Select Room</option>
+                                <option v-for="(room, index) in roomstore.getrooms " :key="index" :value="room.id" selected>{{ room.room }}</option>
                                 
                             </select>
-                            <span v-if="store.errors.bed_type" v-text="store.errors.bed_type[0]" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for=""> Room Number</label>
-                            <input class="form-control" type="number" placeholder="" v-model="store.room.room" />
                             <p v-if="store.errors.room" v-text="store.errors.room[0]" class="text-danger"></p>
                         </div>
+
                         <div class="form-group">
-                            <label for="">Seat Capacity</label>
-                            <input class="form-control" type="number" placeholder="" v-model="store.room.capacity" />
-                            <p v-if="store.errors.capacity" v-text="store.errors.capacity[0]" class="text-danger"></p>
+                            <label for="">Bed Type</label>
+                            <input class="form-control" type="text" placeholder="" v-model="store.seat.bed_type" />
+                            <p v-if="store.errors.bed_type" v-text="store.errors.bed_type[0]" class="text-danger"></p>
                         </div>
+                        
 
                     </div>
                     <div class="modal-footer">
@@ -118,14 +111,17 @@
                 </div>
             </div>
         </div>
+        {{ roomstore.getrooms }}
     </div>
 </template>
 <script setup>
-import { roomStore } from '@/stores/room.js';
+import { seatStore } from '@/stores/seat.js';
 import { hostelStore } from '@/stores/hostel.js';
+import { roomStore } from '@/stores/room.js';
 import { onMounted } from 'vue';
 import { Bootstrap5Pagination } from 'laravel-vue-pagination';
-const store = roomStore();
+const store = seatStore();
+const roomstore = roomStore();
 const hostelstore = hostelStore();
 onMounted(() => {
     store.DataGet();
@@ -133,6 +129,4 @@ onMounted(() => {
 
 })
 </script>
-
-
 

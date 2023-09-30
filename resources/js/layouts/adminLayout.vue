@@ -42,7 +42,7 @@
 
           <div class="sidebar-menu" @click.prevent="auth.account = !auth.account">
             <span><img src="/images/setting.png" alt="" />
-              Setting
+              Setup
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="currentColor"
                 class="bi bi-chevron-down float-right mt-2 mr-4 font-weight-bolder" viewBox="0 0 16 16">
                 <path fill-rule="evenodd"
@@ -54,6 +54,8 @@
             <router-link class="sidebar-item" to="/hostel"><img src="/images/hostel.png" alt="" />Hostel
             </router-link>
             <router-link class="sidebar-item" to="/room"><img src="/images/room.png" alt="" />Room
+            </router-link>
+            <router-link class="sidebar-item" to="/seat"><img src="/images/seat.png" alt="" />Seat
             </router-link>
 
 

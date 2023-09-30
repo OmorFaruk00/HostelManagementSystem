@@ -3,15 +3,15 @@ import { useToast } from "vue-toast-notification";
 import Swal from "sweetalert2";
 import axios from "@/axios";
 
-export const roomStore = defineStore("room", {
+export const seatStore = defineStore("seat", {
     state: () => ({
         add: true,
         update: false,
         errors: "",
-        rooms: "",
+        seats: "",
         id: "",
         toast: useToast(),
-        room: {
+        seat: {
             hostel_id: "",
             room_id: "",
             bed_type: "",
@@ -25,33 +25,33 @@ export const roomStore = defineStore("room", {
         RemoveBtn() {
             this.add = true;
             this.update = false;
-            this.room.hostel_id = "";
-            this.room.room = "";
-            this.room.capacity = "";
+            this.seat.hostel_id = "";
+            this.seat.seat = "";
+            this.seat.capacity = "";
             this.errors = "";
         },
         DataGet(page = 1) {
             axios
-                .get("/room?page=" + page)
+                .get("/seat?page=" + page)
                 .then((response) => {
-                    this.rooms = response.data;
+                    this.seats = response.data;
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;
                 });
-        },     
+        },
         DataStore() {
-            const Data = this.room;
+            const Data = this.seat;
             axios
-                .post("/room", Data)
+                .post("/seat", Data)
                 .then((res) => {
                     $("#customModal").modal("hide");
                     this.toast.success(res.data.message, {
                         position: "top-right",
                     });
-                    this.room.hostel_id = "";
-                    this.room.room = "";
-                    this.room.capacity = "";
+                    this.seat.hostel_id = "";
+                    this.seat.seat = "";
+                    this.seat.capacity = "";
                     this.errors = "";
                     this.DataGet();
                 })
@@ -64,13 +64,12 @@ export const roomStore = defineStore("room", {
         },
         DataEdit(id) {
             axios
-                .get("/room/" + id + "/edit")
+                .get("/seat/" + id + "/edit")
                 .then((res) => {
                     this.id = res.data.id;
-                    this.room.room = res.data.room;
-                    this.room.hostel_id = res.data.hostel_id;
-                    this.room.bed_type = res.data.bed_type;
-                    this.room.capacity = res.data.capacity;
+                    this.seat.seat = res.data.seat;
+                    this.seat.hostel_id = res.data.hostel_id;
+                    this.seat.capacity = res.data.capacity;
                     $("#customModal").modal("show");
                     this.update = true;
                     this.add = false;
@@ -80,9 +79,9 @@ export const roomStore = defineStore("room", {
                 });
         },
         DataUpdate() {
-            const Data = this.room;
+            const Data = this.seat;
             axios
-                .put("/room/" + this.id, Data)
+                .put("/seat/" + this.id, Data)
                 .then((res) => {
                     $("#customModal").modal("hide");
                     this.toast.success(res.data.message, {
@@ -90,9 +89,9 @@ export const roomStore = defineStore("room", {
                     });
                     this.update = false;
                     this.add = true;
-                    this.room.hostel_id = "";
-                    this.room.room = "";
-                    this.room.capacity = "";
+                    this.seat.hostel_id = "";
+                    this.seat.seat = "";
+                    this.seat.capacity = "";
                     this.errors = "";
                     this.DataGet();
                 })
@@ -117,7 +116,7 @@ export const roomStore = defineStore("room", {
             }).then((result) => {
                 if (result.value) {
                     axios
-                        .delete("/room/" + id)
+                        .delete("/seat/" + id)
                         .then((res) => {
                             this.toast.success(res.data.message, {
                                 position: "top-right",

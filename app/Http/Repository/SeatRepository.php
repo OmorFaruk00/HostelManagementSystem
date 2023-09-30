@@ -1,60 +1,58 @@
 <?php
 
 namespace App\Http\Repository;
-use App\Models\Room;
+use App\Models\Seat;
 
-class RoomRepository
+class SeatRepository
 {
 
-    public function getRooms(){
+    public function getSeats(){
         try {
-            $room = Room::with('hostel')->orderBy('id','desc')->paginate(2);
-            return response()->json($room);
+            $Seat = Seat::with('hostel','room')->orderBy('id','desc')->paginate(2);
+            return response()->json($Seat);
                         
            } catch (\Exception $e) {
                return $e->getMessage();
            } 
 
     }
-    public function storeRoom($request){
+    public function storeSeat($request){
         try {
             $data =  $request->validated();  
-            $data['available_seat'] = $request->capacity;
             $data['created_by'] = auth()->user()->id;
-            Room::create($data);
-            return response()->json(['message'=>"Room Created Successfully","status"=>201]);
+            Seat::insert($data);
+            return response()->json(['message'=>"Seat Created Successfully","status"=>201]);
                        
         } catch (\Exception $e) {
             return $e->getMessage();
         } 
     }
-   
 
-    public function editRoom($id){
+    public function editSeat($id){
         try {
-            $room = Room::find($id);
-            return response()->json($room);
+            $Seat = Seat::find($id);
+            return response()->json($Seat);
                                     
            } catch (\Exception $e) {
                return $e->getMessage();
            }       
     }
-    public function updateRoom($request,$id){
+    public function updateSeat($request,$id){
         try {
             $data = $request->validated();
             $data['updated_by'] = auth()->user()->id;
-            Room::find($id)->update($data);
-            return response()->json(['message'=>"Room Updated Successfully","status"=>200]);
+            Seat::find($id)->update($data);
+            return response()->json(['message'=>"Seat Updated Successfully","status"=>200]);
                         
            } catch (\Exception $e) {
                return $e->getMessage();
            }      
       
     }
-    public function deleteRoom($id){
+    public function deleteSeat($id){
         try {
-            Room::find($id)->delete();
-            return response()->json(['message'=>"Room Deleted Successfully"]);
+            Seat::find($id)->delete();
+            return response()->json(['message'=>"Seat Deleted Successfully"]);
                         
            } catch (\Exception $e) {
                return $e->getMessage();
