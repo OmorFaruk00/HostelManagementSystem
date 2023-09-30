@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\HostelController;
+use App\Http\Controllers\RentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,5 @@ Route::group(["middleware" => 'auth:sanctum'], function () {
     Route::resource('hostel', HostelController::class);
     Route::resource('room', RoomController::class);
     Route::resource('seat', SeatController::class);
+    Route::resource('rent', RentController::class);
 });

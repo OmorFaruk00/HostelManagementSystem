@@ -55,7 +55,7 @@
             </router-link>
             <router-link class="sidebar-item" to="/room"><img src="/images/room.png" alt="" />Room
             </router-link>
-            <router-link class="sidebar-item" to="/seat"><img src="/images/seat.png" alt="" />Seat
+            <router-link class="sidebar-item" to="/rent"><img src="/images/rent.png" alt="" />Rent
             </router-link>
 
 

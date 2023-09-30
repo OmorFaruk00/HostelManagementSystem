@@ -8,6 +8,7 @@ import adminLayout from './layouts/adminLayout.vue';
 import hostel from './pages/hostel/index.vue';
 import room from './pages/room/index.vue';
 import seat from './pages/seat/index.vue';
+import rent from './pages/rent/index.vue';
 
 
 
@@ -45,6 +46,11 @@ const routes=[
                 path:"/seat",
                 name:'Seat',
                 component:seat
+            },
+            {
+                path:"/rent",
+                name:'Rent',
+                component:rent
             },
            
 
