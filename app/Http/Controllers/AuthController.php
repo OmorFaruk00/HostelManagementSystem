@@ -34,6 +34,7 @@ class AuthController extends Controller
         }
 
         $input = $request->all();
+     
         $input['password']=bcrypt($input['password']);
         User::create($input);
         return response()->json(['message'=>'User register successfully','status'=>200]);

@@ -10,8 +10,8 @@ export const authStore = defineStore('auth',{
         router:useRouter(),
         toast:useToast(),
          form : {
-            email: "omor@gmail.com",
-            password: "123456",
+            email: "admin@gmail.com",
+            password: "1234",
         },
     }),
     actions:{

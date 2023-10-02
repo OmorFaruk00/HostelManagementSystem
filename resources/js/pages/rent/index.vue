@@ -89,7 +89,7 @@
                             <label for=""> Bed Type</label>
                             <select class="form-control" v-model="store.rent.bed_type">
                                 <option value="" disabled selected>Select Bed Type</option>
-                                <option value="rent">Room</option>
+                                <option value="Room">Room</option>
                                 <option value="Relax">Relax</option>
                                 <option value="Deluxe">Deluxe</option>
                                 <option value="SuperDeluxe">Super Deluxe</option>

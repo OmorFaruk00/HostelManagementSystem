@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('type');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->foreignId('created_by')->constrained()->onDelete('cascade');
-            $table->softDeletes();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
